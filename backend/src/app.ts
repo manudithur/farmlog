@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import farmRoutes from './routes/farmRoutes';
 import paddockRoutes from './routes/paddockRoutes';
 
+const cors = require('cors');
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.listen(process.env.PORT, () => {
   console.log(`Server is running at http://localhost:${process.env.PORT}`);
 });
 
+app.use(cors())
 app.use('/users', userRoutes);
 app.use('/farms', farmRoutes);
 app.use('/paddocks', paddockRoutes);

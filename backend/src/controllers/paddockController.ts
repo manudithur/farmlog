@@ -10,7 +10,8 @@ interface CreatePaddockRequestBody {
     paddockId: String,
     farmId: String,
     name: String,
-    area: Number
+    area: Number,
+    shape: {lat: Number, lng: Number}[] 
 }
 
 const createPaddock = asyncHandler(async (req: Request, res: Response) => {
@@ -162,4 +163,92 @@ const editPaddock = asyncHandler(async (req: Request, res: Response) => {
     }
 });
 
-export { createPaddock, deletePaddock, editPaddock };
+
+const getPaddockById = asyncHandler(async (req: Request, res: Response) => {
+    const authenticatedRequest = req as unknown as AuthenticatedRequest;
+
+    const { paddockId } = req.params;
+
+    if(!paddockId){
+        res.status(400).json({
+            message: "paddockId is required"
+        });
+        return;
+    }
+
+    const paddock = await Paddock.findOne({ paddockId: paddockId });
+
+    if(!paddock){
+        res.status(400).json({
+            message: "Paddock does not exist"
+        });
+        return;
+    }
+
+    const farm = await Farm.findOne({ farmId: paddock.farmId });
+
+    if(authenticatedRequest.userData.farmId != farm.ownerId){
+        res.status(401).json({
+            message: "Unauthorized"
+        });
+        return;
+    }
+
+    try{
+        res.status(200).json({
+            message: "Paddock found",
+            paddock: paddock
+        });
+    } catch(err: any){
+        res.status(500).json({
+            message: err.message
+        });
+    }
+
+});
+
+const getPaddocksByFarmId = asyncHandler(async (req: Request, res: Response) => {
+    const authenticatedRequest = req as unknown as AuthenticatedRequest;
+
+    const { farmId } = req.params;
+
+    if(!farmId){
+        res.status(400).json({
+            message: "farmId is required"
+        });
+        return;
+    }
+
+    const farm = await Farm.findOne({ farmId: farmId });
+
+    if(!farm){
+        res.status(400).json({
+            message: "Farm does not exist"
+        });
+        return;
+    }
+
+    if(authenticatedRequest.userData.userId != farm.ownerId){
+        res.status(401).json({
+            message: "Unauthorized"
+        });
+        return;
+    }
+
+    try{
+        const paddocks = await Paddock.find({ farmId: farmId });
+        res.status(200).json({
+            message: "Paddocks found",
+            paddocks: paddocks
+        });
+    } catch(err: any){
+        res.status(500).json({
+            message: err.message
+        });
+    }
+
+});
+
+
+
+export { createPaddock, deletePaddock, editPaddock, getPaddockById, getPaddocksByFarmId };

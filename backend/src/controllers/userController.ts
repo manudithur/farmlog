@@ -69,6 +69,14 @@ const login = asyncHandler(async (req: Request, res: Response) => {
     const { email, password } = body;
 
     const user = await User.findOne({ email: email });
+
+    if(!user){
+        res.status(404).json({
+            message: "User not found"
+        });
+        return;
+    }
+
     if(!user.farmId){
         res.status(400).json({
             message: "User does not belong to any farm"

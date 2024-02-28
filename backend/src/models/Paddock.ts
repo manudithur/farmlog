@@ -8,6 +8,7 @@ const paddockSchema = new db.Schema({
     liveStockGroupId: String,
     agriculturalProcessId: String,
     crop: String,
+    shape: [{ lat: Number, lng: Number }]
 });
 
 const Paddock = db.model('Paddock', paddockSchema);
