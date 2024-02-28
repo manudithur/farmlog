@@ -7,6 +7,7 @@ import { Claims } from '../models/Claims';
 import { jwtDecode } from 'jwt-decode';
 import '../styles/main.css';
 import { useNavigate } from 'react-router-dom';
+import { createPaddock } from '../api/paddockApi';
 
 const containerStyle = {
   width: '50vw',
@@ -114,7 +115,7 @@ const CreatePaddock: React.FC = () => {
     }
   }
 
-  const createPaddock = async () => {
+  const createPaddockAction = async () => {
     if (!area || !path) {
       notification.info({ message: 'Dibuja un lote primero' })
       return;
@@ -125,14 +126,14 @@ const CreatePaddock: React.FC = () => {
       return;
     }
 
-    try {
-      const response = await api.post('/paddocks', { farmId: claims.farmId, name: paddockName, area, shape: path }, { headers: { Authorization: `Bearer ${token}` } });
+    createPaddock(path, area, paddockName, claims.farmId).then((paddock) => {
       notification.success({ message: 'Lote creado' });
-      router('/paddocks')
-    } catch (err) {
-      console.log(err);
+      router('/paddocks');
+    }).catch((error) => {
+      console.log(error);
       notification.error({ message: 'Error', description: 'Ha ocurrido un error al crear el lote' })
-    }
+    })
+
   }
 
   return (
@@ -150,7 +151,7 @@ const CreatePaddock: React.FC = () => {
           <Button onClick={resetDrawing} type='dashed'>Eliminar dibujo</Button>
           <Input className='w-50' placeholder='Nombre del lote' value={paddockName} onChange={(e) => setPaddockName(e.currentTarget.value)} />
 
-          <Button onClick={createPaddock} type='primary'>Crear lote</Button>
+          <Button onClick={createPaddockAction} type='primary'>Crear lote</Button>
         </div>
       </Flex>
     </>

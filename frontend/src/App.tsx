@@ -26,7 +26,6 @@ function App() {
                   <Route path='/settings' element={<Title level={1}>Settings</Title>} /> */}
                   <Route path='/paddocks/create' element={<CreatePaddock />} />
                   <Route path='/paddocks' element={<ShowPaddocks />} />
-                  {/* <Route path='/test' element={<MapComponent />} /> */}
                   <Route path='/login' element={<Login/>}/>
                   <Route path='/logout' element={<Logout/>}/>
                 </Routes>

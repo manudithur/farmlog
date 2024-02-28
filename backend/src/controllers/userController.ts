@@ -12,17 +12,19 @@ interface RegisterRequestBody {
     email: string;
     password: string;
     name: string;
+    farmId: string;
 }
 
 const register = asyncHandler(async (req: Request, res: Response) => {
     const body = req.body as unknown as RegisterRequestBody;
-    const { role, email, password, name } = body;
+    const { role, email, password, name, farmId } = body;
 
     const newUser = new User({
         role,
         email,
         password,
-        name
+        name,
+        farmId
     });
 
     const verifyEmail = await User.findOne({ email: email });

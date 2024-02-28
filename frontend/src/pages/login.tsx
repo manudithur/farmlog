@@ -2,8 +2,9 @@ import api from "../api/config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/authProvider";
-import { notification } from "antd";
+import { message, notification } from "antd";
 import { Button, Checkbox, Form, Input } from 'antd';
+import { loginUser } from "../api/userApi";
 
 
 type FieldType = {
@@ -22,20 +23,20 @@ const Login: React.FC = () => {
     const [notificationApi, contextHolder] = notification.useNotification();
 
     async function login(values: any) {
-        api.post('/users/login', values).then((response) => {
-            auth.login(response.data.token)
-            notificationApi.success({ message: 'Has iniciado sesion correctamente', description: 'Bienvenido a FARMLOG' })
+        loginUser(values.email, values.password).then((token) => {
+            auth.login(token)
+            message.success('Has iniciado sesion correctamente')
             router('/dashboard')
         }).catch((error) => {
             console.log(error)
             setError(error.response.data.message)
-            notificationApi.error({ message: 'Error', description: 'Ha ocurrido un error al iniciar sesion' })
+            message.error(error.response.data.message)
         })
     }
 
     const onFinishFailed = (errorInfo: any) => {
-        notificationApi.error({ message: 'Error', description: 'Ha ocurrido un error al iniciar sesion' })
-      };
+        message.error('Ha ocurrido un error al iniciar sesion' )
+    };
 
     return (
         <>

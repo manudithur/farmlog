@@ -6,7 +6,11 @@ const editPaddockValidatorSchema = Joi.object({
     area: Joi.number(),
     liveStockGroupId: Joi.string(),
     agriculturalProcessId: Joi.string(),
-    crop: Joi.string()
+    crop: Joi.string(),
+    shape: Joi.array().items(Joi.object({
+        lat: Joi.number(),
+        lng: Joi.number()
+    }))
 });
 
 const editPaddockValidator = (req: any, res: any, next: any) => {

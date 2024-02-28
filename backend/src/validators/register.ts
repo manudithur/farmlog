@@ -11,6 +11,8 @@ const registerValidatorSchema = Joi.object({
         first: Joi.string().required(),
         last: Joi.string().required(),
     }).required(),
+
+    farmId: Joi.string().required(),
 });
 
 const registerValidator = (req: Request, res: Response, next: NextFunction) => {
