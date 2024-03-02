@@ -5,8 +5,6 @@ const paddockSchema = new db.Schema({
     farmId: String,
     name: String,
     area: Number,
-    liveStockGroupId: String,
-    agriculturalProcessId: String,
     crop: String,
     shape: [{ lat: Number, lng: Number }]
 });

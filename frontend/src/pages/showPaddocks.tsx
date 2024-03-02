@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { GoogleMap, useJsApiLoader, Polygon, InfoWindow } from '@react-google-maps/api';
-import api from '../api/config';
+import { useJsApiLoader } from '@react-google-maps/api';
 import { Library } from '@googlemaps/js-api-loader';
 import { Claims } from '../models/Claims';
 import { jwtDecode } from 'jwt-decode';
@@ -37,7 +36,7 @@ const ShowPaddocks: React.FC = () => {
   });
 
   const claims = Claims.fromJson(jwtDecode(token!) as { [key: string]: string });
-  
+
   useEffect(() => {
     if (isLoaded) {
       getPaddocksByFarmId(claims.farmId).then((paddocks) => {
@@ -109,7 +108,7 @@ const ShowPaddocks: React.FC = () => {
               infowindow.open(map, marker);
             });
 
-            
+
           })
 
         }
@@ -128,9 +127,9 @@ const ShowPaddocks: React.FC = () => {
   const confirm = (e: React.MouseEvent<HTMLElement> | undefined) => {
     selectedTableRows.forEach((paddock) => {
       deletePaddock(paddock.key).then(() => {
-        notification.success({message: `${paddock.name} eliminado`})
+        notification.success({ message: `${paddock.name} eliminado` })
       }).catch((error) => {
-        notification.error({message: `Error al eliminar ${paddock.name}, ${error}`})
+        notification.error({ message: `Error al eliminar ${paddock.name}, ${error}` })
       })
     })
     setItems(items.filter((item) => !selectedTableRows.includes(item)))
@@ -139,23 +138,31 @@ const ShowPaddocks: React.FC = () => {
 
 
   return (
-    <>  
+    <>
       <Typography.Title level={2}>Ver lotes</Typography.Title>
-      <Divider/>
+      <Divider />
       <Skeleton loading={isLoading && !isLoaded}>
         <Flex justify='space-evenly' align='start'>
-          <div style={{width: '40%'}}>
-          <div
-            ref={ref}
-            style={{ width: "1000px", height: "700px" }}
-          />
-          </div>
-          <div style={{width: '40%'}}>
-            {
-              paddocks.length != 0 ?
+          {
+            paddocks.length == 0 &&
+            <Row className='w-100 flex-center mb-5'>
+              <Typography.Text type='secondary'>No hay lotes para mostrar</Typography.Text>
+              <Button type='primary' href='/paddocks/create'>Crear Lote <PlusCircleOutlined /></Button>
+            </Row>
+          }
+          <Row className='space-evenly w-100 align-start flex-center'>
+            <div style={{ width: '40%' }}>
+              <div
+                ref={ref}
+                style={{ width: "40vw", height: "60vh" }}
+              />
+            </div>
+            <div style={{ width: '40%' }}>
+              {
+                paddocks.length != 0 &&
                 <>
                   <Row className='w-100 flex-end mb-5'>
-                    <Button type='primary' href='/paddocks/create'>Crear Lote <PlusCircleOutlined/></Button>
+                    <Button type='primary' href='/paddocks/create'>Crear Lote <PlusCircleOutlined /></Button>
                   </Row>
                   <Table dataSource={items} columns={[
                     {
@@ -170,19 +177,19 @@ const ShowPaddocks: React.FC = () => {
                     }
                   ]}
 
-                  rowSelection={{
-                    type: 'checkbox',
-                    onSelect: (record, selected, selectedRows) => {
-                      setSelectedTableRows(selectedRows)
-                    },
-                    hideSelectAll: true 
-                  }}
-                  
-                  pagination={false}
+                    rowSelection={{
+                      type: 'checkbox',
+                      onSelect: (record, selected, selectedRows) => {
+                        setSelectedTableRows(selectedRows)
+                      },
+                      hideSelectAll: true
+                    }}
+
+                    pagination={false}
                   />
                   {
                     selectedTableRows.length > 0 ?
-                    <Row className='w-100 flex-end mt-5'>
+                      <Row className='w-100 flex-end mt-5'>
                         <Popconfirm
                           title="Eliminar lote(s)?"
                           description="Esta accion no se puede deshacer, estas seguro?"
@@ -190,22 +197,19 @@ const ShowPaddocks: React.FC = () => {
                           okText="Si"
                           cancelText="No"
                         >
-                          <Button danger>Eliminar <DeleteOutlined/></Button>
+                          <Button danger>Eliminar <DeleteOutlined /></Button>
                         </Popconfirm>
-                    </Row>
-                    :
-                    null
+                      </Row>
+                      :
+                      null
                   }
                 </>
 
-                :
-                
-                <Row className='w-100 flex-center mb-5'>
-                    <Typography.Text type='secondary'>No hay lotes para mostrar</Typography.Text>
-                    <Button type='primary' href='/paddocks/create'>Crear Lote <PlusCircleOutlined/></Button>
-                </Row>
-            }
-          </div>
+
+              }
+
+            </div>
+          </Row>
         </Flex>
       </Skeleton>
 

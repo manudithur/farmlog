@@ -3,6 +3,8 @@ import userRoutes from './routes/userRoutes';
 import dotenv from 'dotenv';
 import farmRoutes from './routes/farmRoutes';
 import paddockRoutes from './routes/paddockRoutes';
+import groupRoutes from './routes/groupRoutes';
+import groupUpdateRouter from './routes/groupUpdates';
 
 const cors = require('cors');
 
@@ -31,3 +33,5 @@ app.use(cors())
 app.use('/users', userRoutes);
 app.use('/farms', farmRoutes);
 app.use('/paddocks', paddockRoutes);
+app.use('/groups', groupRoutes);
+app.use('/updates', groupUpdateRouter);

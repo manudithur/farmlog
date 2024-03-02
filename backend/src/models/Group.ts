@@ -1,3 +1,4 @@
+import { string } from 'joi';
 import db from '../db/config';
 
 const groupSchema = new db.Schema({
@@ -5,8 +6,9 @@ const groupSchema = new db.Schema({
     groupId: String,
     farmId: String,
     currentPadockId: String,
-    liveStock: [],
-    updates: [],
+    liveStockCount: Number,
+    lastUpdated: Date,
+    isActive: Boolean
 });
 
 const Group = db.model('Group', groupSchema);

@@ -6,6 +6,10 @@ import Login from './pages/login';
 import ShowPaddocks from './pages/showPaddocks';
 import Logout from './pages/logout';
 import { ConfigProvider, Typography } from 'antd';
+import ShowGroups from './pages/showGroups';
+import CreateGroup from './pages/createGroup';
+import GroupDetails from './pages/groupDetails';
+import UpdateGroup from './pages/updateGroup';
 
 function App() {
 
@@ -28,6 +32,10 @@ function App() {
                   <Route path='/paddocks' element={<ShowPaddocks />} />
                   <Route path='/login' element={<Login/>}/>
                   <Route path='/logout' element={<Logout/>}/>
+                  <Route path='/groups' element={<ShowGroups/>}/>
+                  <Route path='/groups/create' element={<CreateGroup/>}/>
+                  <Route path='/groups/:id' element={<GroupDetails/>}/>
+                  <Route path='/groups/:id/update' element={<UpdateGroup/>}/>
                 </Routes>
             </CustomLayout>
           </BrowserRouter>

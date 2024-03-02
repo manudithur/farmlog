@@ -10,7 +10,7 @@ interface CustomLayoutProps {
 
 const loggedInItems = [
     { label: 'Dashboard', key: '/dashboard', icon: <DashboardOutlined />},
-    { label: 'Animales', key: '/animals', icon: <BugOutlined />},
+    { label: 'Animales', key: '/groups', icon: <BugOutlined />},
     { label: 'Lotes', key: '/paddocks', icon: <BuildOutlined/> },
     { label: 'Configuracion', key: '/settings', icon: <SettingOutlined/> },
     { label: 'Logout', key: '/logout', icon: <LogoutOutlined/> },

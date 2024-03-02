@@ -6,14 +6,6 @@ import { AuthenticatedRequest } from '../validators/authenticated';
 import User from '../models/User';
 import Paddock from '../models/Paddock';
 
-interface CreatePaddockRequestBody {
-    paddockId: String,
-    farmId: String,
-    name: String,
-    area: Number,
-    shape: {lat: Number, lng: Number}[] 
-}
-
 const createPaddock = asyncHandler(async (req: Request, res: Response) => {
     const authenticatedRequest = req as unknown as AuthenticatedRequest;
 
@@ -187,7 +179,7 @@ const getPaddockById = asyncHandler(async (req: Request, res: Response) => {
 
     const farm = await Farm.findOne({ farmId: paddock.farmId });
 
-    if(authenticatedRequest.userData.farmId != farm.ownerId){
+    if(authenticatedRequest.userData.userId != farm.ownerId){
         res.status(401).json({
             message: "Unauthorized"
         });

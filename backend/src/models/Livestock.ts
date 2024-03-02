@@ -4,9 +4,9 @@ const livestockSchema = new db.Schema({
     farmId: String,
     Id: String,
     breed: String,
+    gender: String, //male or female
     birthDate: Date,
     weight: Number,
-    healthUpdates: [],
     status: String, // 'alive', 'dead', 'sold', 'sick'
     pregnant: Boolean, 
 });
