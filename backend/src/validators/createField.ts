@@ -8,7 +8,11 @@ const createfieldValidatorSchema = Joi.object({
     shape: Joi.array().items(Joi.object({
         lat: Joi.number().required(),
         lng: Joi.number().required()
-    })).required()
+    })).required(),
+    center: Joi.object({
+        lat: Joi.number().required(),
+        lng: Joi.number().required()
+    }).required()
 });
 
 const createfieldValidator = (req: any, res: any, next: any) => {

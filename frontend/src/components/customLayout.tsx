@@ -11,12 +11,12 @@ interface CustomLayoutProps {
 const loggedInItems = [
     { label: 'Dashboard', key: '/dashboard', icon: <DashboardOutlined />},
     { label: 'Lotes', key: '/fields', icon: <BuildOutlined/> },
-    { label: 'Logout', key: '/logout', icon: <LogoutOutlined/> },
+    { label: 'Salir', key: '/logout', icon: <LogoutOutlined/> },
 ];
 
 const loggedOutItems = [
-    { label: 'About FARMLOG', key: '/about', icon: <QuestionCircleOutlined/> },
-    { label: 'Login', key: '/login', icon: <LoginOutlined/> }
+    { label: 'Sobre FARMLOG', key: '/about', icon: <QuestionCircleOutlined/> },
+    { label: 'Ingresar', key: '/login', icon: <LoginOutlined/> }
 ];
 
 const { Header, Sider, Content } = Layout;

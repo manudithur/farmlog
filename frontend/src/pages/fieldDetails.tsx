@@ -14,18 +14,6 @@ interface GraphData {
     value: number;
 }
 
-interface CustomLabelProps {
-    cx: number;
-    cy: number;
-    midAngle: number;
-    innerRadius: number;
-    outerRadius: number;
-    percent: number;
-    index: number;
-    payload: GraphData;
-    value: number;
-  }
-
 const { RangePicker } = DatePicker;
 
 const dateFormat = 'DD-MM-YYYY';
@@ -67,7 +55,7 @@ const FieldDetails: React.FC = () => {
             try{
             const field = await getfieldById(id!);
             setField(field);
-            const response = await getAccumulatedPrecipitation(field?.shape[0].lat!, field?.shape[0].lng!, dateRange[0].unix().toString(), dateRange[1].unix().toString());
+            const response = await getAccumulatedPrecipitation(field?.center.lat!, field?.center.lng!, dateRange[0].unix().toString(), dateRange[1].unix().toString());
             setData(response.map((value) => {
                 return {
                     name: value.date,
@@ -147,7 +135,7 @@ const FieldDetails: React.FC = () => {
                 <RangePicker
                     maxDate={dayjs()} 
                     minDate={dayjs('01-01-2020')}
-                    defaultValue={[dayjs('01-01-2024', dateFormat), dayjs()]}
+                    defaultValue={[dayjs().subtract(1, 'month'), dayjs()]}
                     onChange={(dates) => dates ? setDateRange([dates[0]!, dates[1]!]) : setDateRange([dayjs().subtract(1, 'month'), dayjs()])}
                     placeholder={["Desde", "Hasta"]}
                 />

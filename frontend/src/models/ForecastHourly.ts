@@ -9,12 +9,12 @@ export class ForecastHourly {
     //   },
 
     date: string;
-    temp: number;
-    feel: number;
+    temp: string;
+    feel: string;
     humidity: number;
     rain: number;
 
-    constructor(date: string, temp: number, feel: number, humidity: number, rain: number) {
+    constructor(date: string, temp: string, feel: string, humidity: number, rain: number) {
         this.date = date;
         this.temp = temp;
         this.feel = feel;
@@ -23,6 +23,6 @@ export class ForecastHourly {
     }
 
     static fromJson(json: any): ForecastHourly {
-        return new ForecastHourly(new Date(json.dt*1000).toLocaleString(), json.main.temp - 273.15, json.main.feels_like - 273.15, json.main.humidity, json.rain ? json.rain['1h'] : 0);
+        return new ForecastHourly(new Date(json.dt*1000).toLocaleString(), ((json.main.temp - 273.15) as Number).toFixed(1), ((json.main.feels_like - 273.15) as Number).toFixed(1), json.main.humidity, json.rain ? json.rain['1h'] : 0);
     }
 }

@@ -9,17 +9,21 @@ import User from '../models/User';
 interface CreateFarmRequestBody {
     name: String,
     ownerId: String,
-    location: [] 
+    center: {lat: number, lng: number}
 }
 
 const createFarm = asyncHandler(async (req: Request, res: Response) => {
     const requestBody = req.body as unknown as CreateFarmRequestBody;
-    const { name, ownerId, location } = requestBody;
+    const { name, center } = requestBody;
 
+    const authenticatedRequest = req as unknown as AuthenticatedRequest;
+    console.log(authenticatedRequest);
+
+    const { userId: ownerId } = authenticatedRequest.userData;
     const newFarm = new Farm({
         name,
         ownerId,
-        location
+        center
     });
 
     const user = await User.findOne({ userId: ownerId });
@@ -67,7 +71,7 @@ const createFarm = asyncHandler(async (req: Request, res: Response) => {
 
 const editFarm = asyncHandler(async (req: Request, res: Response) => {
     const requestBody = req.body as unknown as CreateFarmRequestBody;
-    const { name, location } = requestBody;
+    const { name, center } = requestBody;
 
     const { farmId } = req.params;
 
@@ -82,7 +86,7 @@ const editFarm = asyncHandler(async (req: Request, res: Response) => {
             });
         } else{
             name ? farm.name = name : farm.name;
-            location ? farm.location = location : farm.location;
+            center ? farm.center = center : farm.center;
             farm.save().then((response: any) => {
                 res.status(201).json({
                     message: "Farm updated",
@@ -101,4 +105,20 @@ const editFarm = asyncHandler(async (req: Request, res: Response) => {
     }
 })
 
-export { createFarm, editFarm };
+const getFarm = asyncHandler(async (req: Request, res: Response) => {
+    const authenticatedRequest = req as AuthenticatedRequest;
+
+    const farm = await Farm.findOne({ farmId: authenticatedRequest.userData.farmId });
+
+    if(!farm){
+        res.status(400).json({
+            message: "Farm not found"
+        });
+    } else{
+        res.status(200).json({
+            farm: farm
+        });
+    }
+})
+
+export { createFarm, editFarm, getFarm };

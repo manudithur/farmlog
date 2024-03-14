@@ -1,8 +1,8 @@
 import api from './config';
 import { Field } from '../models/Field';
 
-export async function createfield(path: {lat: number, lng: number}[], area: number, name: string, farmId: string): Promise<Field> {
-    const response = await api.post('/fields', { name, area, shape: path, farmId }, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}});
+export async function createfield(path: {lat: number, lng: number}[], center: {lat: number, lng: number}, area: number, name: string, farmId: string): Promise<Field> {
+    const response = await api.post('/fields', { name, area, shape: path, center, farmId }, {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}});
     return Field.fromJson(response.data.field);
 }
 

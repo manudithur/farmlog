@@ -126,7 +126,14 @@ const Createfield: React.FC = () => {
       return;
     }
 
-    createfield(path, area, fieldName, claims.farmId).then((field) => {
+    //Get center of the polygon
+    const bounds = new window.google.maps.LatLngBounds();
+    path.forEach(coord => {
+      bounds.extend(new window.google.maps.LatLng(coord.lat, coord.lng));
+    });
+    const center = bounds.getCenter();
+
+    createfield(path, {lat: center.lat(), lng: center.lng()}, area, fieldName, claims.farmId).then((field) => {
       notification.success({ message: 'Lote creado' });
       router('/fields');
     }).catch((error) => {

@@ -147,10 +147,10 @@ const Showfields: React.FC = () => {
         <Flex justify='space-evenly' align='center'>
           {
             fields.length == 0 &&
-            <Row className='w-100 flex-center mb-5'>
+            <Flex vertical className='w-100 flex-center mb-5'>
               <Typography.Text type='secondary'>No hay lotes para mostrar</Typography.Text>
               <Button type='primary' href='/fields/create'>Crear Lote <PlusCircleOutlined /></Button>
-            </Row>
+            </Flex>
           }
           <div style={{ width: '40%' }}>
             <div

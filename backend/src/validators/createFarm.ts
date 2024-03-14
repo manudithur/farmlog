@@ -4,8 +4,10 @@ import Joi from "joi";
 
 const createFarmValidatorSchema = Joi.object({
     name: Joi.string().required(),
-    ownerId: Joi.string().required(),
-    location: Joi.array().items(Joi.number()).length(2).required()
+    center: Joi.object({
+        lat: Joi.number().required(),
+        lng: Joi.number().required()
+    }).required()
 });
 
 const createFarmValidator = (req: any, res: any, next: any) => {

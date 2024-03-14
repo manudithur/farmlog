@@ -79,13 +79,6 @@ const login = asyncHandler(async (req: Request, res: Response) => {
         return;
     }
 
-    if(!user.farmId){
-        res.status(400).json({
-            message: "User does not belong to any farm"
-        });
-        return;
-    }
-
     try{
         if (user) {
             bcrypt.compare(password, user.password).then((match: boolean) => {

@@ -11,6 +11,8 @@ import { ForecastHourly } from "../models/ForecastHourly";
 import { Claims } from "../models/Claims";
 import { jwtDecode } from "jwt-decode";
 import { getForecast } from "../api/forecastApi";
+import { Farm } from "../models/Farm";
+import { getFarm } from "../api/farmApi";
 
 interface GraphData {
     name: string;
@@ -29,7 +31,7 @@ const Dashboard: React.FC = () => {
     const router = useNavigate();
     const {Title, Text} = Typography
 
-    const [field, setField] = useState<Field>();
+    const [farm, setFarm] = useState<Farm>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [dailyData, setDailyData] = useState<GraphData[]>([]);
     const [hourlyForecast, setHourlyForecast] = useState<ForecastHourly[]>([]);
@@ -55,11 +57,11 @@ const Dashboard: React.FC = () => {
 
         const fetchData = async () => {
             try{
-            const fields = await getfieldsByFarmId(claims.farmId);
-            setField(fields[0]);
+            const farm = await getFarm();
+            setFarm(farm);
 
 
-            const response = await getAccumulatedPrecipitation(fields[0].shape[0].lat!, fields[0].shape[0].lng!, dayjs().subtract(1, 'week').unix().toString(), dayjs().unix().toString());
+            const response = await getAccumulatedPrecipitation(farm.center.lat!, farm.center.lng!, dayjs().subtract(1, 'week').unix().toString(), dayjs().unix().toString());
             
             const dailyData = transformToDailyRain(response.map((value) => {
                 return {
@@ -71,7 +73,7 @@ const Dashboard: React.FC = () => {
             setDailyData(dailyData);
 
             
-            const forecast = await getForecast(fields[0].shape[0].lat!, fields[0].shape[0].lng!);
+            const forecast = await getForecast(farm.center.lat!, farm.center.lng!);
 
             setHourlyForecast(forecast);
             
@@ -115,7 +117,7 @@ const Dashboard: React.FC = () => {
                     </Card>
                     <Card>
                         <Title level={4} style={{margin: 0}}>Temperatura actual</Title>
-                        <Text>{hourlyForecast[0]?.temp.toFixed(1)}°C</Text>
+                        <Text>{hourlyForecast[0]?.temp}°C</Text>
                     </Card>
                 
                 </Flex>
