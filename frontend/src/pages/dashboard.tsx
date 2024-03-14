@@ -9,7 +9,6 @@ import { ForecastHourly } from "../models/ForecastHourly";
 import { Claims } from "../models/Claims";
 import { jwtDecode } from "jwt-decode";
 import { getForecast } from "../api/forecastApi";
-import { Farm } from "../models/Farm";
 import { getFarm } from "../api/farmApi";
 
 interface GraphData {
