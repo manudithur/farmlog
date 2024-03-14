@@ -10,13 +10,11 @@ dotenv.config();
 
 if (!process.env.JWT_SECRET || !process.env.PORT) {
   console.log('Please define JWT_SECRET, MONGO_URI and PORT in .env file');
-  process.exit(1); // Exit the application if the JWT_SECRET is not defined
+  process.exit(1);
 }
 
 const app = express();
 app.use(express.json());
-
-
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -27,6 +25,7 @@ app.listen(process.env.PORT, () => {
 });
 
 app.use(cors())
+
 app.use((req, res, next) => {
   res.setHeader('Referrer-Policy', 'no-referrer-when-downgrade');
   next();

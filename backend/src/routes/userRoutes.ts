@@ -9,7 +9,7 @@ const userRoutes = Router();
 
 userRoutes.post("/", registerValidator, register);
 userRoutes.post("/login", loginValidator, login);
-userRoutes.get("/:id", authenticatedValidator, profile);
+// userRoutes.get("/:id", authenticatedValidator, profile);
 
 
 export default userRoutes;
