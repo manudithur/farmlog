@@ -1,8 +1,6 @@
-import { Card, Col, DatePicker, Divider, Flex,  Skeleton, Typography, message } from "antd";
+import { Card, Col, DatePicker, Flex,  Skeleton, Typography, message } from "antd";
 import { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, Tooltip, ResponsiveContainer, TooltipProps, XAxis, YAxis, AreaChart, Area } from "recharts";
-import { Field } from "../models/Field";
-import { getfieldsByFarmId } from "../api/fieldApi";
 import { useNavigate } from "react-router-dom";
 import { getAccumulatedPrecipitation } from "../api/accumulatedParamsApi";
 import dayjs from "dayjs";
@@ -18,10 +16,6 @@ interface GraphData {
     name: string;
     value: number;
 }
-
-const { RangePicker } = DatePicker;
-
-const dateFormat = 'DD-MM-YYYY';
 
 const Dashboard: React.FC = () => {
     const token = localStorage.getItem('token');

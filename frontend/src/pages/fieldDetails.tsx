@@ -1,8 +1,8 @@
 import { ToolOutlined } from "@ant-design/icons";
-import { Card, DatePicker, Divider, Flex, Row, Skeleton, Switch, Typography, message } from "antd";
+import { Card, DatePicker, Divider, Flex, Skeleton, Typography, message } from "antd";
 import { useEffect, useState } from "react";
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Tooltip, Pie, PieChart, ResponsiveContainer, TooltipProps, XAxis, YAxis } from "recharts";
-import { Field, fieldShape } from "../models/Field";
+import { Area, AreaChart, Bar, BarChart, CartesianGrid,Tooltip, ResponsiveContainer, TooltipProps, XAxis, YAxis } from "recharts";
+import { Field } from "../models/Field";
 import { getfieldById } from "../api/fieldApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAccumulatedPrecipitation } from "../api/accumulatedParamsApi";
@@ -27,7 +27,6 @@ const FieldDetails: React.FC = () => {
     const [field, setField] = useState<Field>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [dateRange, setDateRange] = useState<[dayjs.Dayjs, dayjs.Dayjs]>([dayjs('01-01-2024', dateFormat), dayjs()]);
-    const [total, setTotal] = useState<number>(0);
     const [data , setData] = useState<GraphData[]>([]);
     const [monthlyData, setMonthlyData] = useState<GraphData[]>([]);
     const [dailyData, setDailyData] = useState<GraphData[]>([]);

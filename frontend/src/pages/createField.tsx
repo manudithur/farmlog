@@ -1,18 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { GoogleMap, DrawingManager, useJsApiLoader } from '@react-google-maps/api';
+import { useJsApiLoader } from '@react-google-maps/api';
 import { Library } from '@googlemaps/js-api-loader';
-import api from '../api/config';
-import { Button, Divider, Flex, Input, Skeleton, Spin, Typography, message, notification } from 'antd';
+import { Button, Divider, Flex, Input, Spin, Typography, notification } from 'antd';
 import { Claims } from '../models/Claims';
 import { jwtDecode } from 'jwt-decode';
 import '../styles/main.css';
 import { useNavigate } from 'react-router-dom';
 import { createfield } from '../api/fieldApi';
-
-const containerStyle = {
-  width: '50vw',
-  height: '60vh'
-};
 
 const center = {
   lat: -34.603709, 

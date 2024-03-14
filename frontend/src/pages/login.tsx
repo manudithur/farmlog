@@ -1,17 +1,10 @@
-import api from "../api/config";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/authProvider";
-import { Divider, Flex, Typography, message, notification } from "antd";
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Divider, Flex, Typography, message } from "antd";
+import { Button, Form, Input } from 'antd';
 import { loginUser } from "../api/userApi";
 import '../styles/main.css'
-
-
-type fieldType = {
-    email?: string;
-    password?: string;
-};
 
 
 const Login: React.FC = () => {

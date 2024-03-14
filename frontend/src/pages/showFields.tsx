@@ -3,11 +3,11 @@ import { useJsApiLoader } from '@react-google-maps/api';
 import { Library } from '@googlemaps/js-api-loader';
 import { Claims } from '../models/Claims';
 import { jwtDecode } from 'jwt-decode';
-import { Button, Divider, Flex, Popconfirm, Row, Skeleton, Table, Typography, notification } from 'antd';
+import { Button, Divider, Flex, Row, Skeleton, Table, Typography } from 'antd';
 
 import '../styles/main.css';
-import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { deletefield, getfieldsByFarmId } from '../api/fieldApi';
+import { PlusCircleOutlined } from '@ant-design/icons';
+import { getfieldsByFarmId } from '../api/fieldApi';
 import { Field } from '../models/Field';
 import { useNavigate } from 'react-router-dom';
 
@@ -30,7 +30,7 @@ const Showfields: React.FC = () => {
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const [selectedTableRows, setSelectedTableRows] = useState<DataType[]>([]);
+  // const [selectedTableRows, setSelectedTableRows] = useState<DataType[]>([]);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string,

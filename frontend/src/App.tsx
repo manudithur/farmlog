@@ -1,11 +1,11 @@
 import CustomLayout from './components/customLayout';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Createfield from './pages/createField';
 import AuthProvider from './hooks/authProvider';
 import Login from './pages/login';
 import Showfields from './pages/showFields';
 import Logout from './pages/logout';
-import { Button, ConfigProvider, Result, Typography } from 'antd';
+import { Button, ConfigProvider, Result } from 'antd';
 import FieldDetails from './pages/fieldDetails';
 import Dashboard from './pages/dashboard';
 import { PrivateRoute } from './components/PrivateRoute';
