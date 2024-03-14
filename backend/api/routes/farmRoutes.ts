@@ -9,7 +9,7 @@ import authenticatedValidator from "../validators/authenticated";
 const farmRoutes = Router();
 
 farmRoutes.post("/", authenticatedValidator, createFarmValidator, createFarm);
-farmRoutes.put("/:farmId", authenticatedValidator, editFarmValidator, editFarm )
+// farmRoutes.put("/:farmId", authenticatedValidator, editFarmValidator, editFarm )
 farmRoutes.get("/", authenticatedValidator, getFarm);
 
 
