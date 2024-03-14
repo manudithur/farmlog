@@ -14,8 +14,7 @@ if (!process.env.JWT_SECRET || !process.env.PORT) {
 }
 
 const corsOptions = {
-  origin: 'https://forecast-front.vercel.app',
-  optionsSuccessStatus: 200 // For legacy browser support
+  origin: '*'
 };
 
 const app = express();
