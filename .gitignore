@@ -33,7 +33,7 @@ dist/
 # Gatsby files
 .cache/
 # Comment the public line if your project uses Gatsby and *not* to track public output
-public/
+# public/
 
 # VuePress build output
 .vuepress/dist
