@@ -15,14 +15,14 @@ const loggedInItems = [
 ];
 
 const loggedOutItems = [
-    { label: 'Sobre FARMLOG', key: '/about', icon: <QuestionCircleOutlined/> },
+    { label: 'Sobre FARMLOG', key: '/', icon: <QuestionCircleOutlined/> },
     { label: 'Ingresar', key: '/login', icon: <LoginOutlined/> }
 ];
 
 const { Header, Sider, Content } = Layout;
 
 const CustomLayout: React.FC<CustomLayoutProps> = ({ children }) => {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
     const {
       token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
@@ -70,7 +70,6 @@ const CustomLayout: React.FC<CustomLayoutProps> = ({ children }) => {
           <Content
             style={{
               margin: '24px 16px',
-              padding: 24,
               minHeight: 280,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,

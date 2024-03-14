@@ -8,6 +8,8 @@ import Logout from './pages/logout';
 import { Button, ConfigProvider, Result, Typography } from 'antd';
 import FieldDetails from './pages/fieldDetails';
 import Dashboard from './pages/dashboard';
+import { PrivateRoute } from './components/PrivateRoute';
+import Landing from './pages/landing';
 function App() {
 
   return (
@@ -22,12 +24,12 @@ function App() {
           <BrowserRouter basename='/'>
             <CustomLayout>
                 <Routes>
-                  {/* <Route path='/' element={<Title level={1}>Home</Title>} />
-                  <Route path='/settings' element={<Title level={1}>Settings</Title>} /> */}
-                  <Route path='/dashboard' element={<Dashboard />} />
-                  <Route path='/fields/create' element={<Createfield />} />
-                  <Route path='/fields' element={<Showfields />} />
-                  <Route path='/fields/:id' element={<FieldDetails />} />
+                   <Route path='/' element={<Landing/>} />
+                  {/*<Route path='/settings' element={<Title level={1}>Settings</Title>} /> */}
+                  <Route path='/dashboard' element={<PrivateRoute component={Dashboard}/>} />
+                  <Route path='/fields/create' element={<PrivateRoute component={Createfield}/>} />
+                  <Route path='/fields' element={<PrivateRoute component={Showfields }/>} />
+                  <Route path='/fields/:id' element={<PrivateRoute component={FieldDetails} />} />
                   <Route path='/login' element={<Login/>}/>
                   <Route path='/logout' element={<Logout/>}/>
                   <Route path='/*' element={  <Result

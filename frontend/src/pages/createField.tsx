@@ -144,7 +144,7 @@ const Createfield: React.FC = () => {
   }
 
   return (
-    <>
+    <div style={{padding: 40}}>
       <Spin spinning={!isLoaded} size='large' />
       <Typography.Title level={2}>Crear lote</Typography.Title>
       <Divider />
@@ -161,7 +161,7 @@ const Createfield: React.FC = () => {
           <Button onClick={createfieldAction} type='primary'>Crear lote</Button>
         </div>
       </Flex>
-    </>
+    </div>
   );
 };
 

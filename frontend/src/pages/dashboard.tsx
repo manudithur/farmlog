@@ -104,7 +104,7 @@ const Dashboard: React.FC = () => {
       };
 
     return (
-        <Flex vertical className="w-100" align="center" justify="center">
+        <Flex vertical className="w-100" align="center" justify="center" style={{padding: 25}}>
             <Skeleton loading={isLoading} >
                 <Flex className="w-50 text-center mt-2vh" justify="space-evenly">
                     <Card>

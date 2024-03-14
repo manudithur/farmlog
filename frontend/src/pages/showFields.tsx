@@ -126,21 +126,21 @@ const Showfields: React.FC = () => {
     , [isLoaded])
 
 
-  const confirm = (e: React.MouseEvent<HTMLElement> | undefined) => {
-    selectedTableRows.forEach((field) => {
-      deletefield(field.key).then(() => {
-        notification.success({ message: `${field.name} eliminado` })
-      }).catch((error) => {
-        notification.error({ message: `Error al eliminar ${field.name}, ${error}` })
-      })
-    })
-    setItems(items.filter((item) => !selectedTableRows.includes(item)))
-  }
+  // const confirm = (e: React.MouseEvent<HTMLElement> | undefined) => {
+  //   selectedTableRows.forEach((field) => {
+  //     deletefield(field.key).then(() => {
+  //       notification.success({ message: `${field.name} eliminado` })
+  //     }).catch((error) => {
+  //       notification.error({ message: `Error al eliminar ${field.name}, ${error}` })
+  //     })
+  //   })
+  //   setItems(items.filter((item) => !selectedTableRows.includes(item)))
+  // }
 
 
 
   return (
-    <>
+    <div style={{padding: 25}}>
       <Typography.Title level={2}>Ver lotes</Typography.Title>
       <Divider />
       <Skeleton loading={isLoading && !isLoaded}>
@@ -178,13 +178,13 @@ const Showfields: React.FC = () => {
                     }
                   ]}
 
-                  rowSelection={{
-                    type: 'checkbox',
-                    onSelect: (record, selected, selectedRows) => {
-                      setSelectedTableRows(selectedRows)
-                    },
-                    hideSelectAll: true
-                  }}
+                  // rowSelection={{
+                  //   type: 'checkbox',
+                  //   onSelect: (record, selected, selectedRows) => {
+                  //     setSelectedTableRows(selectedRows)
+                  //   },
+                  //   hideSelectAll: true
+                  // }}
 
                   onRow={(record, rowIndex) => {
                     return {
@@ -196,20 +196,20 @@ const Showfields: React.FC = () => {
                   pagination={false}
                 />
                 {
-                  selectedTableRows.length > 0 ?
-                    <Row className='w-100 mt-5'>
-                      <Popconfirm
-                        title="Eliminar lote(s)?"
-                        description="Esta accion no se puede deshacer, estas seguro?"
-                        onConfirm={confirm}
-                        okText="Si"
-                        cancelText="No"
-                      >
-                        <Button danger>Eliminar <DeleteOutlined /></Button>
-                      </Popconfirm>
-                    </Row>
-                    :
-                    null
+                  // selectedTableRows.length > 0 ?
+                  //   <Row className='w-100 mt-5'>
+                  //     <Popconfirm
+                  //       title="Eliminar lote(s)?"
+                  //       description="Esta accion no se puede deshacer, estas seguro?"
+                  //       onConfirm={confirm}
+                  //       okText="Si"
+                  //       cancelText="No"
+                  //     >
+                  //       <Button danger>Eliminar <DeleteOutlined /></Button>
+                  //     </Popconfirm>
+                  //   </Row>
+                  //   :
+                  //   null
                 }
               </>
 
@@ -220,7 +220,7 @@ const Showfields: React.FC = () => {
         </Flex>
       </Skeleton>
 
-    </>
+    </div>
   );
 };
 
