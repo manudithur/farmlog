@@ -1,7 +1,7 @@
 
 import Joi from "joi";
 
-const editPaddockValidatorSchema = Joi.object({
+const editfieldValidatorSchema = Joi.object({
     name: Joi.string(),
     area: Joi.number(),
     liveStockGroupId: Joi.string(),
@@ -13,12 +13,12 @@ const editPaddockValidatorSchema = Joi.object({
     }))
 });
 
-const editPaddockValidator = (req: any, res: any, next: any) => {
-    const { error } = editPaddockValidatorSchema.validate(req.body);
+const editfieldValidator = (req: any, res: any, next: any) => {
+    const { error } = editfieldValidatorSchema.validate(req.body);
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
     }
     next();
 }
 
-export default editPaddockValidator;
+export default editfieldValidator;

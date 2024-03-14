@@ -7,7 +7,7 @@ import { Claims } from '../models/Claims';
 import { jwtDecode } from 'jwt-decode';
 import '../styles/main.css';
 import { useNavigate } from 'react-router-dom';
-import { createPaddock } from '../api/paddockApi';
+import { createfield } from '../api/fieldApi';
 
 const containerStyle = {
   width: '50vw',
@@ -22,13 +22,13 @@ const center = {
 const libraries = ['drawing', 'geometry'] as Library[];
 
 
-const CreatePaddock: React.FC = () => {
+const Createfield: React.FC = () => {
 
   const [polygon, setPolygon] = useState<google.maps.Polygon | null>(null);
   const [isPolygonDrawn, setIsPolygonDrawn] = useState(false);
   const [area, setArea] = useState<number | null>(null);
   const [path, setPath] = useState<google.maps.LatLngLiteral[] | null>(null);
-  const [paddockName, setPaddockName] = useState('');
+  const [fieldName, setfieldName] = useState('');
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -115,20 +115,27 @@ const CreatePaddock: React.FC = () => {
     }
   }
 
-  const createPaddockAction = async () => {
+  const createfieldAction = async () => {
     if (!area || !path) {
       notification.info({ message: 'Dibuja un lote primero' })
       return;
     }
 
-    if (!paddockName) {
+    if (!fieldName) {
       notification.info({ message: 'Ingresa un nombre para el lote' })
       return;
     }
 
-    createPaddock(path, area, paddockName, claims.farmId).then((paddock) => {
+    //Get center of the polygon
+    const bounds = new window.google.maps.LatLngBounds();
+    path.forEach(coord => {
+      bounds.extend(new window.google.maps.LatLng(coord.lat, coord.lng));
+    });
+    const center = bounds.getCenter();
+
+    createfield(path, {lat: center.lat(), lng: center.lng()}, area, fieldName, claims.farmId).then((field) => {
       notification.success({ message: 'Lote creado' });
-      router('/paddocks');
+      router('/fields');
     }).catch((error) => {
       console.log(error);
       notification.error({ message: 'Error', description: 'Ha ocurrido un error al crear el lote' })
@@ -137,7 +144,7 @@ const CreatePaddock: React.FC = () => {
   }
 
   return (
-    <>
+    <div style={{padding: 40}}>
       <Spin spinning={!isLoaded} size='large' />
       <Typography.Title level={2}>Crear lote</Typography.Title>
       <Divider />
@@ -149,13 +156,13 @@ const CreatePaddock: React.FC = () => {
         <br></br>
         <div className='w-50 space-around'>
           <Button onClick={resetDrawing} type='dashed'>Eliminar dibujo</Button>
-          <Input className='w-50' placeholder='Nombre del lote' value={paddockName} onChange={(e) => setPaddockName(e.currentTarget.value)} />
+          <Input className='w-50' placeholder='Nombre del lote' value={fieldName} onChange={(e) => setfieldName(e.currentTarget.value)} />
 
-          <Button onClick={createPaddockAction} type='primary'>Crear lote</Button>
+          <Button onClick={createfieldAction} type='primary'>Crear lote</Button>
         </div>
       </Flex>
-    </>
+    </div>
   );
 };
 
-export default CreatePaddock;
+export default Createfield;

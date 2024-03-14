@@ -7,8 +7,9 @@ import { Button, Divider, Flex, Popconfirm, Row, Skeleton, Table, Typography, no
 
 import '../styles/main.css';
 import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
-import { deletePaddock, getPaddocksByFarmId } from '../api/paddockApi';
-import { Paddock } from '../models/Paddock';
+import { deletefield, getfieldsByFarmId } from '../api/fieldApi';
+import { Field } from '../models/Field';
+import { useNavigate } from 'react-router-dom';
 
 interface DataType {
   key: string;
@@ -18,8 +19,9 @@ interface DataType {
 
 const libraries = ['drawing', 'geometry'] as Library[];
 
-const ShowPaddocks: React.FC = () => {
-  const [paddocks, setPaddocks] = useState<Paddock[]>([]);
+const Showfields: React.FC = () => {
+  const [fields, setfields] = useState<Field[]>([]);
+  const router = useNavigate();
 
   const token = localStorage.getItem('token');
 
@@ -39,17 +41,17 @@ const ShowPaddocks: React.FC = () => {
 
   useEffect(() => {
     if (isLoaded) {
-      getPaddocksByFarmId(claims.farmId).then((paddocks) => {
-        setPaddocks(paddocks);
+      getfieldsByFarmId(claims.farmId).then((fields) => {
+        setfields(fields);
 
         const toRet: DataType[] = []
-        paddocks.forEach((paddock) => {
-          toRet.push({ key: paddock.paddockId, name: paddock.name, area: paddock.area.toFixed(2) })
+        fields.forEach((field) => {
+          toRet.push({ key: field.fieldId, name: field.name, area: field.area.toFixed(2) })
         })
         setItems(toRet)
         if (isLoaded && ref.current) { // Check if the API is loaded and the ref is attached
           const map = new window.google.maps.Map(ref.current, {
-            center: { lat: paddocks[0].shape[0].lat, lng: paddocks[0].shape[0].lng },
+            center: { lat: fields[0].shape[0].lat, lng: fields[0].shape[0].lng },
             zoom: 10,
             mapTypeId: 'hybrid',
             mapTypeControl: false,
@@ -72,9 +74,9 @@ const ShowPaddocks: React.FC = () => {
 
           drawingManager.setMap(map);
           //Add polygons
-          paddocks.forEach((paddock) => {
+          fields.forEach((field) => {
             const polygon = new window.google.maps.Polygon({
-              paths: paddock.shape.map((coord) => ({ lat: coord.lat, lng: coord.lng })),
+              paths: field.shape.map((coord) => ({ lat: coord.lat, lng: coord.lng })),
               strokeColor: "blue",
               strokeOpacity: 0.8,
               strokeWeight: 2,
@@ -85,23 +87,23 @@ const ShowPaddocks: React.FC = () => {
           })
 
           //Infowindows
-          paddocks.forEach((paddock) => {
+          fields.forEach((field) => {
             const bounds = new window.google.maps.LatLngBounds();
 
-            paddock.shape.forEach(coord => {
+            field.shape.forEach(coord => {
               bounds.extend(new window.google.maps.LatLng(coord.lat, coord.lng));
             });
 
             const center = bounds.getCenter();
 
             const infowindow = new window.google.maps.InfoWindow({
-              content: `<h3>${paddock.name}</h3><p>${paddock.area.toFixed(2)} hectareas</p>`
+              content: `<h3>${field.name}</h3><p>${field.area.toFixed(2)} hectareas</p>`
             });
 
             const marker = new window.google.maps.Marker({
               position: { lat: center.lat(), lng: center.lng() },
               map,
-              title: paddock.name
+              title: field.name
             });
 
             marker.addListener('click', () => {
@@ -124,47 +126,46 @@ const ShowPaddocks: React.FC = () => {
     , [isLoaded])
 
 
-  const confirm = (e: React.MouseEvent<HTMLElement> | undefined) => {
-    selectedTableRows.forEach((paddock) => {
-      deletePaddock(paddock.key).then(() => {
-        notification.success({ message: `${paddock.name} eliminado` })
-      }).catch((error) => {
-        notification.error({ message: `Error al eliminar ${paddock.name}, ${error}` })
-      })
-    })
-    setItems(items.filter((item) => !selectedTableRows.includes(item)))
-  }
+  // const confirm = (e: React.MouseEvent<HTMLElement> | undefined) => {
+  //   selectedTableRows.forEach((field) => {
+  //     deletefield(field.key).then(() => {
+  //       notification.success({ message: `${field.name} eliminado` })
+  //     }).catch((error) => {
+  //       notification.error({ message: `Error al eliminar ${field.name}, ${error}` })
+  //     })
+  //   })
+  //   setItems(items.filter((item) => !selectedTableRows.includes(item)))
+  // }
 
 
 
   return (
-    <>
+    <div style={{padding: 25}}>
       <Typography.Title level={2}>Ver lotes</Typography.Title>
       <Divider />
       <Skeleton loading={isLoading && !isLoaded}>
-        <Flex justify='space-evenly' align='start'>
+        <Flex justify='space-evenly' align='center'>
           {
-            paddocks.length == 0 &&
-            <Row className='w-100 flex-center mb-5'>
+            fields.length == 0 &&
+            <Flex vertical className='w-100 flex-center mb-5'>
               <Typography.Text type='secondary'>No hay lotes para mostrar</Typography.Text>
-              <Button type='primary' href='/paddocks/create'>Crear Lote <PlusCircleOutlined /></Button>
-            </Row>
+              <Button type='primary' href='/fields/create'>Crear Lote <PlusCircleOutlined /></Button>
+            </Flex>
           }
-          <Row className='space-evenly w-100 align-start flex-center'>
-            <div style={{ width: '40%' }}>
-              <div
-                ref={ref}
-                style={{ width: "40vw", height: "60vh" }}
-              />
-            </div>
-            <div style={{ width: '40%' }}>
-              {
-                paddocks.length != 0 &&
-                <>
-                  <Row className='w-100 flex-end mb-5'>
-                    <Button type='primary' href='/paddocks/create'>Crear Lote <PlusCircleOutlined /></Button>
-                  </Row>
-                  <Table dataSource={items} columns={[
+          <div style={{ width: '40%' }}>
+            <div
+              ref={ref}
+              style={{ width: "100%", height: "50vh" }}
+            />
+          </div>
+          <div style={{ width: '40%' }}>
+            {
+              fields.length != 0 &&
+              <>
+                <Row className='w-100 flex-end mb-5'>
+                  <Button type='primary' href='/fields/create'>Crear Lote <PlusCircleOutlined /></Button>
+                </Row>
+                <Table dataSource={items} columns={[
                     {
                       title: 'Nombre',
                       dataIndex: 'name',
@@ -177,44 +178,50 @@ const ShowPaddocks: React.FC = () => {
                     }
                   ]}
 
-                    rowSelection={{
-                      type: 'checkbox',
-                      onSelect: (record, selected, selectedRows) => {
-                        setSelectedTableRows(selectedRows)
-                      },
-                      hideSelectAll: true
-                    }}
+                  // rowSelection={{
+                  //   type: 'checkbox',
+                  //   onSelect: (record, selected, selectedRows) => {
+                  //     setSelectedTableRows(selectedRows)
+                  //   },
+                  //   hideSelectAll: true
+                  // }}
 
-                    pagination={false}
-                  />
-                  {
-                    selectedTableRows.length > 0 ?
-                      <Row className='w-100 flex-end mt-5'>
-                        <Popconfirm
-                          title="Eliminar lote(s)?"
-                          description="Esta accion no se puede deshacer, estas seguro?"
-                          onConfirm={confirm}
-                          okText="Si"
-                          cancelText="No"
-                        >
-                          <Button danger>Eliminar <DeleteOutlined /></Button>
-                        </Popconfirm>
-                      </Row>
-                      :
-                      null
-                  }
-                </>
+                  onRow={(record, rowIndex) => {
+                    return {
+                      onClick: event => {
+                        router(`/fields/${record.key}`)
+                      }
+                    }
+                  }}
+                  pagination={false}
+                />
+                {
+                  // selectedTableRows.length > 0 ?
+                  //   <Row className='w-100 mt-5'>
+                  //     <Popconfirm
+                  //       title="Eliminar lote(s)?"
+                  //       description="Esta accion no se puede deshacer, estas seguro?"
+                  //       onConfirm={confirm}
+                  //       okText="Si"
+                  //       cancelText="No"
+                  //     >
+                  //       <Button danger>Eliminar <DeleteOutlined /></Button>
+                  //     </Popconfirm>
+                  //   </Row>
+                  //   :
+                  //   null
+                }
+              </>
 
 
-              }
+            }
 
-            </div>
-          </Row>
+          </div>
         </Flex>
       </Skeleton>
 
-    </>
+    </div>
   );
 };
 
-export default ShowPaddocks;
+export default Showfields;

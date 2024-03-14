@@ -2,7 +2,7 @@ import { Layout, Menu, Button, theme, Image } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../hooks/authProvider';
-import { BugOutlined, BuildOutlined, DashboardOutlined, LoginOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, QuestionCircleOutlined, SettingOutlined } from '@ant-design/icons';
+import { BuildOutlined, DashboardOutlined, LoginOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface CustomLayoutProps {
   children: React.ReactNode;
@@ -10,21 +10,19 @@ interface CustomLayoutProps {
 
 const loggedInItems = [
     { label: 'Dashboard', key: '/dashboard', icon: <DashboardOutlined />},
-    { label: 'Animales', key: '/groups', icon: <BugOutlined />},
-    { label: 'Lotes', key: '/paddocks', icon: <BuildOutlined/> },
-    { label: 'Configuracion', key: '/settings', icon: <SettingOutlined/> },
-    { label: 'Logout', key: '/logout', icon: <LogoutOutlined/> },
+    { label: 'Lotes', key: '/fields', icon: <BuildOutlined/> },
+    { label: 'Salir', key: '/logout', icon: <LogoutOutlined/> },
 ];
 
 const loggedOutItems = [
-    { label: 'About FARMLOG', key: '/about', icon: <QuestionCircleOutlined/> },
-    { label: 'Login', key: '/login', icon: <LoginOutlined/> }
+    { label: 'Sobre FARMLOG', key: '/', icon: <QuestionCircleOutlined/> },
+    { label: 'Ingresar', key: '/login', icon: <LoginOutlined/> }
 ];
 
 const { Header, Sider, Content } = Layout;
 
 const CustomLayout: React.FC<CustomLayoutProps> = ({ children }) => {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
     const {
       token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
@@ -72,7 +70,6 @@ const CustomLayout: React.FC<CustomLayoutProps> = ({ children }) => {
           <Content
             style={{
               margin: '24px 16px',
-              padding: 24,
               minHeight: 280,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,

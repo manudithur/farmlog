@@ -4,7 +4,7 @@ const farmSchema = new db.Schema({
     farmId: String,
     name: String,
     ownerId: String,
-    location: []
+    center: {lat: Number, lng: Number},
 });
 
 const Farm = db.model('Farm', farmSchema);

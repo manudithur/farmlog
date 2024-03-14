@@ -4,9 +4,9 @@ import { Request, Response } from "express";
 import Farm from '../models/Farm';
 import { AuthenticatedRequest } from '../validators/authenticated';
 import User from '../models/User';
-import Paddock from '../models/Paddock';
+import Field from '../models/Field';
 
-const createPaddock = asyncHandler(async (req: Request, res: Response) => {
+const createfield = asyncHandler(async (req: Request, res: Response) => {
     const authenticatedRequest = req as unknown as AuthenticatedRequest;
 
     const farm = await Farm.findOne({ farmId: req.body.farmId });
@@ -26,20 +26,20 @@ const createPaddock = asyncHandler(async (req: Request, res: Response) => {
         return;
     }
 
-    const verifyPaddock = await Paddock.findOne({ name: req.body.name, farmId: req.body.farmId });
+    const verifyfield = await Field.findOne({ name: req.body.name, farmId: req.body.farmId });
 
     try {
-        if(verifyPaddock){
+        if(verifyfield){
             res.status(400).json({
-                message: "Paddock already exists"
+                message: "field already exists"
             });
         } else{
-            const newPaddock = new Paddock(req.body);
-            newPaddock.paddockId = uuidv4();
-            newPaddock.save().then((response: any) => {
+            const newfield = new Field(req.body);
+            newfield.fieldId = uuidv4();
+            newfield.save().then((response: any) => {
                 res.status(201).json({
-                    message: "Paddock created",
-                    paddock: response
+                    message: "field created",
+                    field: response
                 });
             }).catch((err: any) => {
                 res.status(500).json({
@@ -54,28 +54,28 @@ const createPaddock = asyncHandler(async (req: Request, res: Response) => {
     }
 });
 
-const deletePaddock = asyncHandler(async (req: Request, res: Response) => {
+const deletefield = asyncHandler(async (req: Request, res: Response) => {
     const authenticatedRequest = req as unknown as AuthenticatedRequest;
 
-    const { paddockId } = req.params;
+    const { fieldId } = req.params;
 
-    if(!paddockId){
+    if(!fieldId){
         res.status(400).json({
-            message: "paddockId is required"
+            message: "fieldId is required"
         });
         return;
     }
 
-    const paddock = await Paddock.findOne({ paddockId: paddockId });
+    const field = await Field.findOne({ fieldId: fieldId });
 
-    if(!paddock){
+    if(!field){
         res.status(400).json({
-            message: "Paddock does not exist"
+            message: "field does not exist"
         });
         return;
     }
 
-    const farm = await Farm.findOne({ farmId: paddock.farmId });
+    const farm = await Farm.findOne({ farmId: field.farmId });
 
     if(authenticatedRequest.userData.userId != farm.ownerId){
         res.status(401).json({
@@ -84,17 +84,17 @@ const deletePaddock = asyncHandler(async (req: Request, res: Response) => {
         return;
     }
 
-    if(paddock.liveStockGroupId || paddock.agriculturalProcessId){
+    if(field.liveStockGroupId || field.agriculturalProcessId){
         res.status(400).json({
-            message: "Paddock is in use"
+            message: "field is in use"
         });
         return;
     }
 
     try{
-        Paddock.deleteOne({ paddockId: paddockId }).then(() => {
+        field.deleteOne({ fieldId: fieldId }).then(() => {
             res.status(200).json({
-                message: "Paddock deleted"
+                message: "field deleted"
             });
         }).catch((err: any) => {
             res.status(500).json({
@@ -108,28 +108,28 @@ const deletePaddock = asyncHandler(async (req: Request, res: Response) => {
     }
 })
 
-const editPaddock = asyncHandler(async (req: Request, res: Response) => {
+const editfield = asyncHandler(async (req: Request, res: Response) => {
     const authenticatedRequest = req as unknown as AuthenticatedRequest;
 
-    const { paddockId } = req.params;
+    const { fieldId } = req.params;
 
-    if(!paddockId){
+    if(!fieldId){
         res.status(400).json({
-            message: "paddockId is required"
+            message: "fieldId is required"
         });
         return;
     }
 
-    const paddock = await Paddock.findOne({ paddockId: paddockId });
+    const field = await Field.findOne({ fieldId: fieldId });
 
-    if(!paddock){
+    if(!field){
         res.status(400).json({
-            message: "Paddock does not exist"
+            message: "field does not exist"
         });
         return;
     }
 
-    const farm = await Farm.findOne({ farmId: paddock.farmId });
+    const farm = await Farm.findOne({ farmId: field.farmId });
 
     if(authenticatedRequest.userData.farmId != farm.ownerId){
         res.status(401).json({
@@ -139,9 +139,9 @@ const editPaddock = asyncHandler(async (req: Request, res: Response) => {
     }
 
     try{
-        paddock.updateOne(req.body).then(() => {
+        field.updateOne(req.body).then(() => {
             res.status(200).json({
-                message: "Paddock updated"
+                message: "field updated"
             });
         }).catch((err: any) => {
             res.status(500).json({
@@ -156,28 +156,28 @@ const editPaddock = asyncHandler(async (req: Request, res: Response) => {
 });
 
 
-const getPaddockById = asyncHandler(async (req: Request, res: Response) => {
+const getfieldById = asyncHandler(async (req: Request, res: Response) => {
     const authenticatedRequest = req as unknown as AuthenticatedRequest;
 
-    const { paddockId } = req.params;
+    const { fieldId } = req.params;
 
-    if(!paddockId){
+    if(!fieldId){
         res.status(400).json({
-            message: "paddockId is required"
+            message: "fieldId is required"
         });
         return;
     }
 
-    const paddock = await Paddock.findOne({ paddockId: paddockId });
+    const field = await Field.findOne({ fieldId: fieldId });
 
-    if(!paddock){
+    if(!field){
         res.status(400).json({
-            message: "Paddock does not exist"
+            message: "field does not exist"
         });
         return;
     }
 
-    const farm = await Farm.findOne({ farmId: paddock.farmId });
+    const farm = await Farm.findOne({ farmId: field.farmId });
 
     if(authenticatedRequest.userData.userId != farm.ownerId){
         res.status(401).json({
@@ -188,8 +188,8 @@ const getPaddockById = asyncHandler(async (req: Request, res: Response) => {
 
     try{
         res.status(200).json({
-            message: "Paddock found",
-            paddock: paddock
+            message: "field found",
+            field: field
         });
     } catch(err: any){
         res.status(500).json({
@@ -199,7 +199,7 @@ const getPaddockById = asyncHandler(async (req: Request, res: Response) => {
 
 });
 
-const getPaddocksByFarmId = asyncHandler(async (req: Request, res: Response) => {
+const getfieldsByFarmId = asyncHandler(async (req: Request, res: Response) => {
     const authenticatedRequest = req as unknown as AuthenticatedRequest;
 
     const { farmId } = req.params;
@@ -228,10 +228,10 @@ const getPaddocksByFarmId = asyncHandler(async (req: Request, res: Response) => 
     }
 
     try{
-        const paddocks = await Paddock.find({ farmId: farmId });
+        const fields = await Field.find({ farmId: farmId });
         res.status(200).json({
-            message: "Paddocks found",
-            paddocks: paddocks
+            message: "fields found",
+            fields: fields
         });
     } catch(err: any){
         res.status(500).json({
@@ -243,4 +243,4 @@ const getPaddocksByFarmId = asyncHandler(async (req: Request, res: Response) => 
 
 
 
-export { createPaddock, deletePaddock, editPaddock, getPaddockById, getPaddocksByFarmId };
+export { createfield, deletefield, editfield, getfieldById, getfieldsByFarmId };
