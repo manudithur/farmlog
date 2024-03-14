@@ -1,6 +1,6 @@
 import { Button, Carousel, Col, Flex, Image, Row, Typography } from "antd"
 import '../styles/main.css'
-import Fondo from '../../public/Fondo.jpg'
+import Fondo from '../assets/Fondo.jpg'
 
 const Landing : React.FC = () => {
     const {Title, Text} = Typography;
