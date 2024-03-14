@@ -13,6 +13,10 @@ if (!process.env.JWT_SECRET || !process.env.PORT) {
   process.exit(1); // Exit the application if the JWT_SECRET is not defined
 }
 
+const corsOptions = {
+  origin: 'https://forecast-front.vercel.app',
+  optionsSuccessStatus: 200 // For legacy browser support
+};
 
 const app = express();
 app.use(express.json());
@@ -27,7 +31,7 @@ app.listen(process.env.PORT, () => {
   console.log(`Server is running at http://localhost:${process.env.PORT}`);
 });
 
-app.use(cors())
+app.use(cors(corsOptions))
 app.use('/users', userRoutes);
 app.use('/farms', farmRoutes);
 app.use('/fields', fieldRoutes);
