@@ -1,4 +1,4 @@
-import { Card, Col, DatePicker, Flex,  Skeleton, Typography, message } from "antd";
+import { Card, Col, Flex,  Skeleton, Typography, message } from "antd";
 import { useEffect, useState } from "react";
 import { Bar, BarChart, CartesianGrid, Tooltip, ResponsiveContainer, TooltipProps, XAxis, YAxis, AreaChart, Area } from "recharts";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +25,6 @@ const Dashboard: React.FC = () => {
     const router = useNavigate();
     const {Title, Text} = Typography
 
-    const [farm, setFarm] = useState<Farm>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [dailyData, setDailyData] = useState<GraphData[]>([]);
     const [hourlyForecast, setHourlyForecast] = useState<ForecastHourly[]>([]);
@@ -52,8 +51,6 @@ const Dashboard: React.FC = () => {
         const fetchData = async () => {
             try{
             const farm = await getFarm();
-            setFarm(farm);
-
 
             const response = await getAccumulatedPrecipitation(farm.center.lat!, farm.center.lng!, dayjs().subtract(1, 'week').unix().toString(), dayjs().unix().toString());
             

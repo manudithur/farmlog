@@ -125,8 +125,6 @@ const FieldDetails: React.FC = () => {
         return null;
       };
 
-
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
     return (
         <Flex vertical className="w-100" align="center" justify="center" style={{padding: 25}}>
             <Skeleton loading={isLoading} >

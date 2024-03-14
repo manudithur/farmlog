@@ -13,7 +13,6 @@ const Login: React.FC = () => {
     const router = useNavigate();
     const {Title, Text} = Typography;
 
-    const [error, setError] = useState('')
 
     async function login(values: any) {
         loginUser(values.email, values.password).then((token) => {
@@ -22,12 +21,11 @@ const Login: React.FC = () => {
             router('/dashboard')
         }).catch((error) => {
             console.log(error)
-            setError(error.response.data.message)
             message.error(error.response.data.message)
         })
     }
 
-    const onFinishFailed = (errorInfo: any) => {
+    const onFinishFailed = () => {
         message.error('Ha ocurrido un error al iniciar sesion' )
     };
 

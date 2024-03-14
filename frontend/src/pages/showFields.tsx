@@ -186,9 +186,9 @@ const Showfields: React.FC = () => {
                   //   hideSelectAll: true
                   // }}
 
-                  onRow={(record, rowIndex) => {
+                  onRow={(record) => {
                     return {
-                      onClick: event => {
+                      onClick: () => {
                         router(`/fields/${record.key}`)
                       }
                     }

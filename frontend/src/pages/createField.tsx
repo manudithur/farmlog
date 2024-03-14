@@ -127,7 +127,7 @@ const Createfield: React.FC = () => {
     });
     const center = bounds.getCenter();
 
-    createfield(path, {lat: center.lat(), lng: center.lng()}, area, fieldName, claims.farmId).then((field) => {
+    createfield(path, {lat: center.lat(), lng: center.lng()}, area, fieldName, claims.farmId).then(() => {
       notification.success({ message: 'Lote creado' });
       router('/fields');
     }).catch((error) => {
