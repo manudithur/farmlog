@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
-const uri = process.env.MONGO_URI!
+const uri = import.meta.env.VITE_MONGO_URI!
 
 mongoose.connect(uri)
   .then(() => {

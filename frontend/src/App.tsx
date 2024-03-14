@@ -10,8 +10,6 @@ import FieldDetails from './pages/fieldDetails';
 import Dashboard from './pages/dashboard';
 import { PrivateRoute } from './components/PrivateRoute';
 import Landing from './pages/landing';
-require('dotenv').config({path: '../.env'});
-
 
 function App() {
 
