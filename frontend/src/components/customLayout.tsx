@@ -2,7 +2,7 @@ import { Layout, Menu, Button, theme, Image } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../hooks/authProvider';
-import { BugOutlined, BuildOutlined, DashboardOutlined, LoginOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, QuestionCircleOutlined, SettingOutlined } from '@ant-design/icons';
+import { BuildOutlined, DashboardOutlined, LoginOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 
 interface CustomLayoutProps {
   children: React.ReactNode;
@@ -10,9 +10,7 @@ interface CustomLayoutProps {
 
 const loggedInItems = [
     { label: 'Dashboard', key: '/dashboard', icon: <DashboardOutlined />},
-    { label: 'Animales', key: '/groups', icon: <BugOutlined />},
-    { label: 'Lotes', key: '/paddocks', icon: <BuildOutlined/> },
-    { label: 'Configuracion', key: '/settings', icon: <SettingOutlined/> },
+    { label: 'Lotes', key: '/fields', icon: <BuildOutlined/> },
     { label: 'Logout', key: '/logout', icon: <LogoutOutlined/> },
 ];
 

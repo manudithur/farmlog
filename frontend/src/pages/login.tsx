@@ -7,7 +7,7 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { loginUser } from "../api/userApi";
 
 
-type FieldType = {
+type fieldType = {
     email?: string;
     password?: string;
 };
@@ -50,7 +50,7 @@ const Login: React.FC = () => {
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
-                <Form.Item<FieldType>
+                <Form.Item<fieldType>
                     label="Email"
                     name="email"
                     rules={[{ required: true, message: 'Ingrese un email' }]}
@@ -58,7 +58,7 @@ const Login: React.FC = () => {
                     <Input type="email" />
                 </Form.Item>
 
-                <Form.Item<FieldType>
+                <Form.Item<fieldType>
                     label="Contrasena"
                     name="password"
                     rules={[{ required: true, message: 'Ingrese una contrasena'}, {min: 6, message: 'La contrasena debe tener al menos 6 caracteres'}]}

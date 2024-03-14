@@ -1,7 +1,7 @@
 import db from '../db/config';
 
-const paddockSchema = new db.Schema({
-    paddockId: String,
+const fieldSchema = new db.Schema({
+    fieldId: String,
     farmId: String,
     name: String,
     area: Number,
@@ -9,6 +9,6 @@ const paddockSchema = new db.Schema({
     shape: [{ lat: Number, lng: Number }]
 });
 
-const Paddock = db.model('Paddock', paddockSchema);
+const field = db.model('field', fieldSchema);
 
-export default Paddock;
+export default field;
