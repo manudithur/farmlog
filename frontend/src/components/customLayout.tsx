@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuthContext } from '../hooks/authProvider';
 import { BuildOutlined, DashboardOutlined, LoginOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-
+import FarmlogLogo from '../assets/FarmLogLogo.png';
 interface CustomLayoutProps {
   children: React.ReactNode;
 }
@@ -65,7 +65,7 @@ const CustomLayout: React.FC<CustomLayoutProps> = ({ children }) => {
                 height: 64,
               }}
             />
-            <Image src='/FarmLogLogo.png' height={55} preview={false}/>
+            <Image src={FarmlogLogo} height={55} preview={false}/>
           </Header>
           <Content
             style={{

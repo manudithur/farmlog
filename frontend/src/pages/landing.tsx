@@ -1,6 +1,11 @@
 import { Button, Carousel, Col, Flex, Image, Row, Typography } from "antd"
 import '../styles/main.css'
 import Fondo from '../assets/Fondo.jpg'
+import Lotes from '../assets/lotes.png'
+import Historial1 from '../assets/historial1.png'
+import Historial2 from '../assets/historial2.png'
+import Historial3 from '../assets/historial3.png'
+import Dashboard from '../assets/dashboard.png'
 
 const Landing : React.FC = () => {
     const {Title, Text} = Typography;
@@ -14,7 +19,7 @@ const Landing : React.FC = () => {
 
             <Row style={{padding: 25}}>
                 <Col span={12}>
-                    <Image src={'./lotes.png'} width="100%" height="100%" preview={false} />
+                    <Image src={Lotes} width="100%" height="100%" preview={false} />
                 </Col>
                 <Col span={12}>
                     <Flex vertical style={{padding: 50}} justify="center">
@@ -35,20 +40,20 @@ const Landing : React.FC = () => {
                 <Col span={12}>
                     <Carousel autoplay autoplaySpeed={6000} style={{overflow: 'hidden'}}>
                         <div>
-                            <Image src={'./historial1.png'} width="100%" height="100%" preview={false} />      
+                            <Image src={Historial1} width="100%" height="100%" preview={false} />      
                         </div>
                         <div>
-                            <Image src={'./historial2.png'} width="100%" height="100%" preview={false} />
+                            <Image src={Historial2} width="100%" height="100%" preview={false} />
                         </div>
                         <div>
-                            <Image src={'./historial3.png'} width="100%" height="100%" preview={false} />
+                            <Image src={Historial3} width="100%" height="100%" preview={false} />
                         </div>
                     </Carousel>
                 </Col>
             </Row>
             <Row style={{padding: 25}}>
                 <Col span={12}>
-                    <Image src={'./dashboard.png'} width="100%" height="100%" preview={false} />
+                    <Image src={Dashboard} width="100%" height="100%" preview={false} />
                 </Col>
                 <Col span={12}>
                     <Flex vertical style={{padding: 50}} justify="center">
