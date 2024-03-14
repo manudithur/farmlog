@@ -8,7 +8,7 @@ const cors = require('cors');
 
 dotenv.config();
 
-if (!import.meta.env.VITE_JWT_SECRET || !import.meta.env.VITE_PORT) {
+if (!process.env.JWT_SECRET || !process.env.PORT) {
   console.log('Please define JWT_SECRET, MONGO_URI and PORT in .env file');
   process.exit(1); // Exit the application if the JWT_SECRET is not defined
 }
@@ -23,8 +23,8 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.listen(import.meta.env.VITE_PORT, () => {
-  console.log(`Server is running at http://localhost:${import.meta.env.VITE_PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running at http://localhost:${process.env.PORT}`);
 });
 
 app.use(cors())

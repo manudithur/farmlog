@@ -90,7 +90,7 @@ const login = asyncHandler(async (req: Request, res: Response) => {
                             role: user.role,
                             farmId: user.farmId,
                         },
-                        import.meta.env.VITE_JWT_SECRET as string,
+                        process.env.JWT_SECRET as string,
                         { 
                             expiresIn: "24h" 
                         }

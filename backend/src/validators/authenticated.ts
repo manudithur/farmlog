@@ -16,7 +16,7 @@ export interface AuthenticatedRequest extends Request {
 const authenticatedValidator = (req: Request, res: Response, next: NextFunction) => {
     try {
       const token = req.headers.authorization?.replace("Bearer ", "") || '';
-      const decoded = jwt.verify(token, import.meta.env.VITE_JWT_SECRET as string);
+      const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
       const authenticatedRequest = req as AuthenticatedRequest;
       authenticatedRequest.userData = decoded as { email: string; userId: string; role: string; farmId: number, iat: number; exp: number; }
       next();
