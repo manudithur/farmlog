@@ -151,15 +151,15 @@ const Showfields: React.FC = () => {
             <Button type='primary' href='/fields/create'>Crear Lote <PlusCircleOutlined /></Button>
           </Flex>
         }
+        <div style={{ width: '40%' }}>
+          <div
+            ref={ref}
+            style={{ width: "100%", height: "50vh" }}
+          />
+        </div>
         {fields.length != 0 &&
           <Flex justify='space-evenly' align='center'>
 
-            <div style={{ width: '40%' }}>
-              <div
-                ref={ref}
-                style={{ width: "100%", height: "50vh" }}
-              />
-            </div>
             <div style={{ width: '40%' }}>
               {
                 fields.length != 0 &&

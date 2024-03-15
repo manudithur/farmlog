@@ -37,6 +37,8 @@ const CustomLayout: React.FC<CustomLayoutProps> = ({ children }) => {
       setLoggedIn(auth.isAuthenticated)
       if(auth.isAuthenticated){
         setClaims(Claims.fromJson(jwtDecode(auth.token) as { [key: string]: string }))
+      } else{
+        setClaims(null)
       }
     }, [auth.isAuthenticated])
 
