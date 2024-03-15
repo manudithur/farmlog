@@ -140,32 +140,34 @@ const Showfields: React.FC = () => {
 
 
   return (
-    <div style={{padding: 25}}>
+    <div style={{ padding: 25 }}>
       <Typography.Title level={2}>Ver lotes</Typography.Title>
       <Divider />
       <Skeleton loading={isLoading && !isLoaded}>
-        <Flex justify='space-evenly' align='center'>
-          {
-            fields.length == 0 &&
-            <Flex vertical className='w-100 flex-center mb-5'>
-              <Typography.Text type='secondary'>No hay lotes para mostrar</Typography.Text>
-              <Button type='primary' href='/fields/create'>Crear Lote <PlusCircleOutlined /></Button>
-            </Flex>
-          }
-          <div style={{ width: '40%' }}>
-            <div
-              ref={ref}
-              style={{ width: "100%", height: "50vh" }}
-            />
-          </div>
-          <div style={{ width: '40%' }}>
-            {
-              fields.length != 0 &&
-              <>
-                <Row className='w-100 flex-end mb-5'>
-                  <Button type='primary' href='/fields/create'>Crear Lote <PlusCircleOutlined /></Button>
-                </Row>
-                <Table dataSource={items} columns={[
+        {
+          fields.length == 0 &&
+          <Flex vertical className='w-100 flex-center mb-5' style={{ backgroundColor: 'bl' }}>
+            <Typography.Text type='secondary'>No hay lotes para mostrar</Typography.Text>
+            <Button type='primary' href='/fields/create'>Crear Lote <PlusCircleOutlined /></Button>
+          </Flex>
+        }
+        {fields.length != 0 &&
+          <Flex justify='space-evenly' align='center'>
+
+            <div style={{ width: '40%' }}>
+              <div
+                ref={ref}
+                style={{ width: "100%", height: "50vh" }}
+              />
+            </div>
+            <div style={{ width: '40%' }}>
+              {
+                fields.length != 0 &&
+                <>
+                  <Row className='w-100 flex-end mb-5'>
+                    <Button type='primary' href='/fields/create'>Crear Lote <PlusCircleOutlined /></Button>
+                  </Row>
+                  <Table dataSource={items} columns={[
                     {
                       title: 'Nombre',
                       dataIndex: 'name',
@@ -178,46 +180,47 @@ const Showfields: React.FC = () => {
                     }
                   ]}
 
-                  // rowSelection={{
-                  //   type: 'checkbox',
-                  //   onSelect: (record, selected, selectedRows) => {
-                  //     setSelectedTableRows(selectedRows)
-                  //   },
-                  //   hideSelectAll: true
-                  // }}
+                    // rowSelection={{
+                    //   type: 'checkbox',
+                    //   onSelect: (record, selected, selectedRows) => {
+                    //     setSelectedTableRows(selectedRows)
+                    //   },
+                    //   hideSelectAll: true
+                    // }}
 
-                  onRow={(record) => {
-                    return {
-                      onClick: () => {
-                        router(`/fields/${record.key}`)
+                    onRow={(record) => {
+                      return {
+                        onClick: () => {
+                          router(`/fields/${record.key}`)
+                        }
                       }
-                    }
-                  }}
-                  pagination={false}
-                />
-                {
-                  // selectedTableRows.length > 0 ?
-                  //   <Row className='w-100 mt-5'>
-                  //     <Popconfirm
-                  //       title="Eliminar lote(s)?"
-                  //       description="Esta accion no se puede deshacer, estas seguro?"
-                  //       onConfirm={confirm}
-                  //       okText="Si"
-                  //       cancelText="No"
-                  //     >
-                  //       <Button danger>Eliminar <DeleteOutlined /></Button>
-                  //     </Popconfirm>
-                  //   </Row>
-                  //   :
-                  //   null
-                }
-              </>
+                    }}
+                    pagination={false}
+                  />
+                  {
+                    // selectedTableRows.length > 0 ?
+                    //   <Row className='w-100 mt-5'>
+                    //     <Popconfirm
+                    //       title="Eliminar lote(s)?"
+                    //       description="Esta accion no se puede deshacer, estas seguro?"
+                    //       onConfirm={confirm}
+                    //       okText="Si"
+                    //       cancelText="No"
+                    //     >
+                    //       <Button danger>Eliminar <DeleteOutlined /></Button>
+                    //     </Popconfirm>
+                    //   </Row>
+                    //   :
+                    //   null
+                  }
+                </>
 
 
-            }
+              }
 
-          </div>
-        </Flex>
+            </div>
+          </Flex>
+        }
       </Skeleton>
 
     </div>
