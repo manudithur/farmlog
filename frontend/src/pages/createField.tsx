@@ -7,11 +7,9 @@ import { jwtDecode } from 'jwt-decode';
 import '../styles/main.css';
 import { useNavigate } from 'react-router-dom';
 import { createfield } from '../api/fieldApi';
+import { getFarm } from '../api/farmApi';
 
-const center = {
-  lat: -34.603709, 
-  lng: -58.381647
-};
+
 
 const libraries = ['drawing', 'geometry'] as Library[];
 
@@ -38,16 +36,18 @@ const Createfield: React.FC = () => {
 
 
   useEffect(() => {
-
+    const loadApp = async () => {
     if (polygon) {
       return () => {
         polygon.setMap(null);
       }
     }
 
+    const farm = await getFarm()
+
     if (isLoaded && ref.current) { // Check if the API is loaded and the ref is attached
       const map = new window.google.maps.Map(ref.current, {
-        center,
+        center: { lat: farm.center.lat, lng: farm.center.lng },
         zoom: 10,
         mapTypeId: 'hybrid',
         mapTypeControl: false,
@@ -78,6 +78,8 @@ const Createfield: React.FC = () => {
       // Cleanup
       
     }
+  }
+  loadApp();
   }, [isLoaded, polygon]); // React on isLoaded and polygon changes
   
 
