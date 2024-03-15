@@ -89,6 +89,7 @@ const login = asyncHandler(async (req: Request, res: Response) => {
                             userId: user.userId,
                             role: user.role,
                             farmId: user.farmId,
+                            name: user.name.first
                         },
                         process.env.JWT_SECRET as string,
                         { 

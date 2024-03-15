@@ -4,6 +4,8 @@ import { Divider, Flex, Typography, message } from "antd";
 import { Button, Form, Input } from 'antd';
 import { loginUser } from "../api/userApi";
 import '../styles/main.css'
+import { Claims } from "../models/Claims";
+import { jwtDecode } from "jwt-decode";
 
 
 const Login: React.FC = () => {
@@ -16,7 +18,8 @@ const Login: React.FC = () => {
     async function login(values: any) {
         loginUser(values.email, values.password).then((token) => {
             auth.login(token)
-            message.success('Has iniciado sesion correctamente')
+            const claims = Claims.fromJson(jwtDecode(token) as { [key: string]: string });
+            message.success('Hola ' + claims.name + '!')
             router('/dashboard')
         }).catch((error) => {
             console.log(error)
