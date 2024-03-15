@@ -44,8 +44,8 @@ const Createfield: React.FC = () => {
     }
 
     const farm = await getFarm()
-
-    if (isLoaded && ref.current) { // Check if the API is loaded and the ref is attached
+    console.log(farm.center);
+    if (isLoaded && ref.current) {
       const map = new window.google.maps.Map(ref.current, {
         center: { lat: farm.center.lat, lng: farm.center.lng },
         zoom: 10,
