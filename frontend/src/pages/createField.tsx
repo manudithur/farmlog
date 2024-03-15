@@ -56,6 +56,11 @@ const Createfield: React.FC = () => {
           position: google.maps.ControlPosition.TOP_CENTER,
         },
       });
+
+      new window.google.maps.Marker({
+        position: { lat: farm.center.lat, lng: farm.center.lng },
+        map
+      });
   
       const drawingManager = new window.google.maps.drawing.DrawingManager({
         drawingMode: google.maps.drawing.OverlayType.POLYGON,
