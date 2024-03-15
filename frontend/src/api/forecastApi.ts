@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { ForecastHourly } from '../models/ForecastHourly';
-
+const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 const forecastApi = axios.create({
-    baseURL: import.meta.env.VITE_FORECAST_BASE_URL as string,
+    baseURL: proxyUrl+import.meta.env.VITE_FORECAST_BASE_URL as string,
     timeout: 5000,
 });
 

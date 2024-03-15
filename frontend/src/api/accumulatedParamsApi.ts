@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { AccumulatedPrecipitation } from '../models/AccumulatedPrecipitation';
-
+const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 const accumulatedParamsApi = axios.create({
-    baseURL: import.meta.env.VITE_ACCUMULATED_BASE_URL as string,
+    baseURL: proxyUrl+import.meta.env.VITE_ACCUMULATED_BASE_URL as string,
     timeout: 5000,
 });
 
