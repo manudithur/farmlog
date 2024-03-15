@@ -14,7 +14,7 @@ const Landing : React.FC = () => {
             <div style={{backgroundImage: `url(${Fondo})`, padding: 100}}>
                 <Text type="secondary" style={{fontSize: '1.5rem', color: '#4a9f42'}}>Bienvenido a FARMLOG!</Text>
                 <Title level={1} style={{margin: 0, fontWeight: 'bolder', color: 'white'}}>Monitorea las lluvias sin pluviometro</Title>
-                <Button type="primary" size="large" style={{marginTop: 20}} onClick={() => window.location.href = 'https://wa.me/5491169425755'}>Solicitar demo</Button>
+                <Button type="primary" size="large" style={{marginTop: 20}} onClick={() => window.open('https://wa.me/5491169425755')}>Solicitar demo</Button>
             </div>
 
             <Row style={{padding: 25}}>

@@ -46,6 +46,7 @@ const Login: React.FC = () => {
                     className="bg-white p-4 rounded-lg shadow-md w-100"
                 >   
                     <Title level={2}>Iniciar Sesion</Title>
+                    <span>No tenes usuario? <a onClick={() => window.open('https://wa.me/5491169425755')}>Solicitar demo</a></span>
                     <Divider/>
                     <Text type="secondary" className="w-100">Email</Text>
                     <Form.Item
